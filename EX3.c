@@ -1,204 +1,125 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<stdbool.h>
-#include<string.h>
 
-typedef struct produit{
-	char Design[21];
-	int qte;
-	float prix;
-}Produit;
-
-typedef struct s_element {
-	Produit prod ;
-	struct s_element *suivant;
-}element;
-
-typedef struct stock_l{
-	int nbr_prod;
-	element * debut;
-}Stock;
-
-void Creer_Stock(Stock *stock){
-	stock->nbr_prod=0;
-	stock->debut = NULL;
+void saisie(int n, int *Tab){
+	int i;
+	printf("Entrer les %d elements du tableau : \n",n);
+	for(i=0;i<n;i++){
+		printf("Tab[%d]= ",i);
+		scanf("%d",Tab+i);
+	}	
 }
 
-void Saisir_Produit(Produit *p) {
-	printf("\t Saisir la designation du produit : \n");
-	scanf("%s", p->Design);
-	printf("\t Saisir la qunatite du produit : \n");
-	scanf("%d", &p->qte);
-	printf("\t Saisir le prix du produit : :\n");
-	scanf ("%f", &p->prix);
-}
-
-element* creer_element(Produit produit){
-	element *e;
-	e = (element *) malloc(sizeof(element));
-	if(e != NULL){
-		e->prod = produit;
-		e->suivant = NULL;
-	}
-	return e;
-}
-
-element* acceder_element(Stock s, int position){
-	element *resultat = s.debut;//temp
-	int p;
-	p=0;
-	while(p<position && resultat!=NULL){
-		resultat = resultat->suivant;
-		p++;
-	}
-	return resultat;
-}
-
-bool inserer_element(Stock *s, element *e, int p){ 
-	element *temp = s->debut, *avant, *apres;
-	bool erreur = false;
-	if(p==0){ // si on insère en position 0, on doit modifier l
-		e->suivant = temp;
-		s->debut = e;
-		(s->nbr_prod)++;//Changement
-	} // sinon, on doit modifier le champ 'suivant' de l'élément précédent
-	else{ 
-		temp = acceder_element(*s,p-1); // on se place au bon endroit
-		if(temp==NULL)	// on insère l'élément
-			erreur = true;
-		else{ 
-			avant = temp;
-			apres = temp->suivant;
-			e->suivant = apres;
-			avant->suivant = e;
-			(s->nbr_prod)++;
-		}
-}
-return erreur;
-}
-
-int rechercher_produit(Stock s, char *desg){ 
-	int i = 0;
-	int pos = -1;
-	element *temp = s.debut;
-	while(pos==-1 && temp!=NULL){
-		if(strcmp(temp->prod.Design,desg)>0)
-			pos = i;
-		else{
-			temp = temp->suivant;
-			i++;
-		}
-	}
-return pos;
-}
-
-bool inserer_produit(Stock *s, Produit *prod){ 
-	element *temp = s->debut, *avant, *apres;
-	element *e = creer_element(*prod);
-	bool erreur = false;
-	int p;
-	if(s->nbr_prod==0){
-		e->suivant = temp;
-		s->debut = e;
-		(s->nbr_prod)++;
-	}else{
-		p = rechercher_produit(*s,e->prod.Design);
-		if(p==0){ // si on insère en position 0, on doit modifier l
-			e->suivant = temp;
-			s->debut = e;
-			(s->nbr_prod)++;
-		}
-		else if(p==-1){
-			temp = acceder_element(*s,(s->nbr_prod)-1);
-			if(temp==NULL)	// on insère l'élément
-				erreur = true;
-			else{
-				e->suivant = NULL;
-				temp->suivant = e;
-				(s->nbr_prod)++;
-			}
-		}
-		else{ 
-			temp = acceder_element(*s,p-1); // on se place au bon endroit
-			if(temp==NULL)	// on insère l'élément
-				erreur = true;
-			else{ 
-				avant = temp;
-				apres = temp->suivant;
-				e->suivant = apres;
-				avant->suivant = e;
-				(s->nbr_prod)++;
-			}
-	}
-}
-return erreur;
-}
-
-void Afficher_Produit(Produit p) {
-	printf("%s\t\t%d\t%.2f \n", p.Design,p.qte,p.prix);	
-}
-
-void Afficher_Stock(Stock s){
-	printf("Nombre de produits : %d \n", s.nbr_prod);
-	printf("Liste des produits: \n");
-	printf("************************************************\n");
-	printf("Designation\tQuantite\tPrix \n");
+void afficher(int n, int *Tab){
+	int i;
+	printf("\n Les elements du tableau Tab sont \n");
 	
-	element *temp = s.debut;
-	while(temp != NULL){
-		Afficher_Produit(temp->prod);
-		temp = temp->suivant;
+	for(i=0;i<n;i++){
+		printf("--> %d ", *(Tab+i));
+		printf("\n");
 	}
 }
 
-void produit_pl_cher(Stock s){
-	element *temp = s.debut;
-	float max = 0.0;
-	element *cher;
-	while(temp != NULL){
-		if(temp->prod.prix>max){
-			max = temp->prod.prix;
-			cher = temp;
+/****** Déclaration des Fonctions Minimum du Tableau *******/
+
+void minimum(int n, int *Tab){
+	int min, i;
+	min = *Tab;
+	for(i=1;i<n;i++){
+		if(Tab[i]<min)
+			min = Tab[i];
+	}
+	printf("le minimum du Tableau Tab est %d : \n", min);
+	//return min;
+}
+
+/****** Déclaration des Fonctions Maximum du Tableau *******/
+
+void maximum(int n, int *Tab){
+	int max, i;
+	max = *Tab;
+	for(i=1;i<n;i++){
+		if(Tab[i]>max)
+			max = Tab[i];
+	}
+	printf("le maximum du Tableau Tab est %d : \n", max);
+	//return max;
+}
+
+/****** Déclaration des Fonctions Maximum du Tableau *******/
+
+void moyenne(int n, int *Tab){
+	float moy;
+	int i, somme = 0;
+	//somme = *Tab;
+	for(i=0;i<n;i++){
+		somme += Tab[i];
+	}
+	moy = (float)somme/n;
+	printf("la moyenne du Tableau Tab est %.2f : \n", moy);
+	//return max;
+}
+void Trier(int n, int *T){
+	int tmp;
+	int *ptr1, *ptr2;
+	for(ptr1=T;ptr1<T+n;ptr1++){
+		for(ptr2=ptr1+1;ptr2<T+n;ptr2++){
+			if(*ptr1>*ptr2){
+				tmp = *ptr1;
+				*ptr1 = *ptr2;
+				*ptr2 = tmp;
+			}
 		}
-		temp = temp->suivant;
 	}
-	Afficher_Produit(temp->prod);
+	printf("Les elements du Tableau après le Tri \n");
+	afficher(n,T);
+}
+
+void reexecuter_N(int n, int a, int *Tab){
+	int i;
+	Tab = realloc(Tab,n*sizeof(int));
+	printf("Entrer les %d autres elements du tableau : \n",a);
+	for(i=n-a;i<n;i++){
+		printf("Tab[%d]= ",i);
+		scanf("%d",Tab+i);
+	}
+	afficher(n,Tab);
+	maximum(n,Tab);
+	minimum(n,Tab);
+	moyenne(n,Tab);
+	Trier(n,Tab);
 }
 
 
-
-/******************************************************************/
-
-
-
-int main() {
-
-int i,n;
-bool res_ins = false;
-Stock *stock = (Stock*) malloc(sizeof(Stock));
-Creer_Stock(stock);
-
-printf("Entrer le nombre de produits \n");
-scanf("%d",&n);
-for(i=0;i<n;i++){
-	Produit *prod = (Produit*) malloc(sizeof(Produit));
-	Saisir_Produit(prod);
-	element * elem = creer_element(*prod);
-	res_ins = inserer_produit(stock,prod);
-	if(!res_ins)
-  		printf("Insertion avec succes \n");
-  	else
-  		printf("Erreur d\'insertion \n");
+int main(){
+	char reponse;
+	int n, a, i;
+	printf("Veuillez entrer le nombre d\'elements a saisir: \n");
+	scanf("%d",&n);
+	
+	int *Tab = calloc(n,sizeof(int));
+	saisie(n,Tab);
+	afficher(n,Tab);
+	maximum(n,Tab);
+	minimum(n,Tab);
+	moyenne(n,Tab);
+	Trier(n,Tab);
+	printf("est-ce que vous voulez effectuer une autre operation ?");
+	getchar();//fflush(stdin);
+	scanf("%c",&reponse);
+	while(reponse!='N'){
+		printf("Veuillez entrer le nombre d\'elements a saisir: \n");
+		scanf("%d",&a);
+		n = n + a;
+		for(i=0;i<n-a;i++){
+			printf("--> %d ", *(Tab+i));
+			printf("\n");
+		}
+		reexecuter_N(n,a,Tab);
+		printf("est-ce que vous voulez effectuer une autre operation ?");
+		getchar();//fflush(stdin);
+		scanf("%c",&reponse);
+	}
+	return 0;
+	
 }
-
-Afficher_Stock(*stock);
-produit_pl_cher(*stock);
-
-
-
-return 0;
-  
-}
-
-
-
