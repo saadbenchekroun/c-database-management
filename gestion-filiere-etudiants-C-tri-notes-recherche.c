@@ -16,9 +16,9 @@ typedef struct etudiant{
 }Etudiant;
 
 typedef struct tab_Filiere{
-	char nom_fil[20] ; // nom filière
-	int nb_etud; // nombre d'étudiants
-	Etudiant etudiants[100]; // tableau d'étudiants
+	char nom_fil[20] ; // nom filiÃ¨re
+	int nb_etud; // nombre d'Ã©tudiants
+	Etudiant etudiants[100]; // tableau d'Ã©tudiants
 }Filiere;
 
 void Ajouter_Filiere(Filiere *Fil){
@@ -195,7 +195,7 @@ int main() {
 	/**********Ajouter Filiere*********************/
 	Ajouter_Filiere(Fil);
 	
-	/**********  Ajouter des Etudiants à la Filiere ******************/
+	/**********  Ajouter des Etudiants Ã  la Filiere ******************/
 	for(i=0;i<5;i++){
 		Ajouter_Etudiant(Fil);
 	}
