@@ -57,14 +57,14 @@ element* acceder_element(Stock s, int position){
 bool inserer_element(Stock *s, element *e, int p){ 
 	element *temp = s->debut, *avant, *apres;
 	bool erreur = false;
-	if(p==0){ // si on insère en position 0, on doit modifier l
+	if(p==0){ // si on insÃ¨re en position 0, on doit modifier l
 		e->suivant = temp;
 		s->debut = e;
 		(s->nbr_prod)++;//Changement
-	} // sinon, on doit modifier le champ 'suivant' de l'élément précédent
+	} // sinon, on doit modifier le champ 'suivant' de l'Ã©lÃ©ment prÃ©cÃ©dent
 	else{ 
 		temp = acceder_element(*s,p-1); // on se place au bon endroit
-		if(temp==NULL)	// on insère l'élément
+		if(temp==NULL)	// on insÃ¨re l'Ã©lÃ©ment
 			erreur = true;
 		else{ 
 			avant = temp;
@@ -103,14 +103,14 @@ bool inserer_produit(Stock *s, Produit *prod){
 		(s->nbr_prod)++;
 	}else{
 		p = rechercher_produit(*s,e->prod.Design);
-		if(p==0){ // si on insère en position 0, on doit modifier l
+		if(p==0){ // si on insÃ¨re en position 0, on doit modifier l
 			e->suivant = temp;
 			s->debut = e;
 			(s->nbr_prod)++;
 		}
 		else if(p==-1){
 			temp = acceder_element(*s,(s->nbr_prod)-1);
-			if(temp==NULL)	// on insère l'élément
+			if(temp==NULL)	// on insÃ¨re l'Ã©lÃ©ment
 				erreur = true;
 			else{
 				e->suivant = NULL;
@@ -120,7 +120,7 @@ bool inserer_produit(Stock *s, Produit *prod){
 		}
 		else{ 
 			temp = acceder_element(*s,p-1); // on se place au bon endroit
-			if(temp==NULL)	// on insère l'élément
+			if(temp==NULL)	// on insÃ¨re l'Ã©lÃ©ment
 				erreur = true;
 			else{ 
 				avant = temp;
