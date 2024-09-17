@@ -86,14 +86,14 @@ element* acceder_element(Filiere l, int position){
 bool inserer_element(Filiere *l, element *e, int p){ 
 	element *temp = l->debut, *avant, *apres;
 	bool erreur = false;
-	if(p==0){ // si on insère en position 0, on doit modifier l
+	if(p==0){ // si on insÃ¨re en position 0, on doit modifier l
 		e->suivant = temp;
 		l->debut = e;
 		(l->nb_etud)++;//Changement
-	} // sinon, on doit modifier le champ 'suivant' de l'élément précédent
+	} // sinon, on doit modifier le champ 'suivant' de l'Ã©lÃ©ment prÃ©cÃ©dent
 	else{ 
 		temp = acceder_element(*l,p-1); // on se place au bon endroit
-		if(temp==NULL)	// on insère l'élément
+		if(temp==NULL)	// on insÃ¨re l'Ã©lÃ©ment
 			erreur = true;
 		else{ 
 			avant = temp;
@@ -261,9 +261,9 @@ bool supprimer_element(Filiere *l, int p){
 		else
 			l->debut = e->suivant;
 	}
-	else {// sinon, on doit modifier le champ 'suivant' de l'élément précédent
+	else {// sinon, on doit modifier le champ 'suivant' de l'Ã©lÃ©ment prÃ©cÃ©dent
 		temp = acceder_element(*l,p-1); // on se place au bon endroit
-		// on supprime l'élément de la liste
+		// on supprime l'Ã©lÃ©ment de la liste
 		if(temp==NULL)	
 			erreur = true;
 		else {
@@ -277,7 +277,7 @@ bool supprimer_element(Filiere *l, int p){
 			}
 		}
 	}
-// on désalloue l'élément
+// on dÃ©salloue l'Ã©lÃ©ment
 if(!erreur)
 	free(e);
 // on termine la fonction
@@ -391,14 +391,14 @@ bool inserer_filiere(liste_filiere *l, Filiere *f){
 		(l->nbr_fil)++;
 	}else{
 		p = rechercher_filiere(*l,f->nom_fil);
-		if(p==0){ // si on insère en position 0, on doit modifier l
+		if(p==0){ // si on insÃ¨re en position 0, on doit modifier l
 			f->next = temp;
 			l->first = f;
 			(l->nbr_fil)++;
 		}
 		else if(p==-1){
 			temp = acceder_filiere(*l,(l->nbr_fil)-1);
-			if(temp==NULL)	// on insère l'élément
+			if(temp==NULL)	// on insÃ¨re l'Ã©lÃ©ment
 				erreur = true;
 			else{
 				f->next = NULL;
@@ -408,7 +408,7 @@ bool inserer_filiere(liste_filiere *l, Filiere *f){
 		}
 		else{ 
 			temp = acceder_filiere(*l,p-1); // on se place au bon endroit
-			if(temp==NULL)	// on insère l'élément
+			if(temp==NULL)	// on insÃ¨re l'Ã©lÃ©ment
 				erreur = true;
 			else{ 
 				avant = temp;
